@@ -2,6 +2,7 @@
 
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
 const {check, validationResult } = require('express-validator');
 
 var router = express.Router();
@@ -31,18 +32,21 @@ router.post('/register', (req, res, next) => {
     
     // check for and validate required inputs
     check('username', 'Username is required').notEmpty();
+
     check('email', 'Email required').notEmpty();
     check('email', 'Invalid email').isEmail();
+
     check('password', 'password is required').notEmpty();
     check('password2', 'passwords do not match').equals(req.body.password);
+
     check('Firstname', 'First name is required').notEmpty();
     check('Lastname', 'Lastname is required').notEmpty();
 
     let errors = validationResult(req);
     
-    if(errors){
+    if(!errors.isEmpty()){
         res.render('registration', {
-            errors:errors
+            errors:errors.array()
         });
     } else {
         let newUser = new User({
@@ -52,25 +56,28 @@ router.post('/register', (req, res, next) => {
             firstname:firstname,
             lastname:lastname
         });
-        console.log('hi');
         
         // hash password with salt
         bcrypt.genSalt(15, (err, salt) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
-                if(error){
+                if(err){
                     console.log(err);
                 }
                 newUser.password = hash;
                 
-                // newUser.save((err) => {
-                //     if(err){
-                //         console.log(err);
-                //         return
-                //     } else {
-                //         req.flash('success', 'You are now registered');
-                //         res.redirect('/user/login');
-                //     }
-                // })
+                console.log(newUser);
+                
+                newUser.save((err) => {
+                    if(err){
+                        console.log(err);
+                        return;
+
+                    } else {
+                        //req.flash('success', 'You are now registered');
+                        res.redirect('/login');
+                        console.log("sucessfully signed up");
+                    }
+                })
             });
         })
     }
@@ -78,12 +85,16 @@ router.post('/register', (req, res, next) => {
 
 //----------------------- login page -----------------------------
 router.get('/login', (req, res) => {
-    res.send("this is the login page");
+    res.render('login');
 });
 
 // authentication
-router.post('/login', (req, res) => {
-    res.send("login authentication");
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', { 
+        successRedirect:'/',
+        failureRedirect:'/login',
+        failureFlash:true
+    })(req,res,next);
 });
 
 module.exports = router; 
