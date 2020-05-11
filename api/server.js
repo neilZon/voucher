@@ -1,23 +1,29 @@
 //=====================  server.js  ======================
 
-const express = require('express'); // express app
+const express = require('express'); 
+const path = require('path');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
-const app = express();
+require('dotenv/config');
+
+const app = express(); // init express app
+
+// LOAD VIEW ENGINE
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 //MIDDLEWARE
-app.use('/login', (req, res, next) => {
-    console.log("howdy");
-    next();
-})
+app.use(bodyParser.json())
 
 //ROUTES
 app.use('/', require('./routes/index'));
 
 //CONNECT TO DB
-mongoose.connect('mongodb+srv://voucher-user0:<password>@vouchercluster0-k7dyp.mongodb.net/test?retryWrites=true&w=majority', () => {
+mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true},() => {
     console.log('Connection success');
 })
 
+//START SERVER
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`server started on port ${PORT}`));
