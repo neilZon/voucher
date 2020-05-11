@@ -1,0 +1,11 @@
+.spacer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 200px;
+}
+.padder{
+  padding-top: 70px;
+  background: transparent;
+}
