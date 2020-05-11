@@ -1,11 +1,53 @@
-.spacer {
+.mainWrapper {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 200px;
 }
 .padder{
   padding-top: 70px;
   background: transparent;
+}
+.fontlol {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.example-small-box, .example-large-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px;
+  border-radius: 8px;
+}
+
+.example-small-box {
+  height: 100px;
+  width: 100px;
+}
+
+/* .example-large-box {
+  w
+} */
+.loginsignup {
+  position: absolute;
+  z-index:30;
+}
+.mat-tab-label {
+  width: 100px !important;
+  padding: 30px;
+  background-color: transparent;
+  color: #000000;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.mat-tab-label.mat-tab-label-active {
+  width: 100px !important;
+  padding: 5px;
+  background-color: transparent;
+  color:#0356fc;
+
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background: #0356fc;
+  height: 4px;
 }
