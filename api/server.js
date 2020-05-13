@@ -23,7 +23,7 @@ app.set('view engine', 'pug');
 app.use(bodyParser.json());
 app.use(flash());
 app.use(session({
-    secret: 'keyboard cat',
+    secret: 'keyboard cat', //TODO: change this to a random string 
     resave: true,
     saveUninitialized: true
 }));
@@ -39,7 +39,7 @@ app.use(passport.session());
 app.use('/', require('./routes/index'));
 
 //CONNECT TO MONGODB
-mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true},() => {
+mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true, useUnifiedTopology: true},() => {
     console.log('Connection success');
 });
 

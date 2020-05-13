@@ -29,9 +29,9 @@ router.post('/register',[
         check('username', 'Username is required').notEmpty().withMessage('username is required'),
         check('email', 'Email required').notEmpty(),
         check('email', 'Invalid email').isEmail(),
-        check('password', 'password is required').notEmpty(),
-        check('confirmPassword', 'passwords do not match').notEmpty().custom((value, { req }) => value === req.body.password),
-        check('firstname', 'First name is required').notEmpty(),
+        check('password', 'Password is required').notEmpty(),
+        check('confirmPassword', 'Passwords do not match').notEmpty().custom((value, { req }) => value === req.body.password),
+        check('firstname', 'Firstname is required').notEmpty(),
         check('lastname', 'Lastname is required').notEmpty()
     ], (req, res, next) => {
     const username = req.body.username;

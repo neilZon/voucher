@@ -21,7 +21,7 @@ describe('/registration tests', function(done) {
   describe('POST register request', function(done){
 
     // valid registration
-    it('should redirect to login page', function(done){
+    it('should redirect to /login', function(done){
       this.timeout(15000); //TODO: need to find out why this takes so long
       request(app)
         .post('/register')
@@ -33,9 +33,8 @@ describe('/registration tests', function(done) {
           "firstname": "first",
           "lastname": "last"
         })
-        .redirects(1)
-        .expect('<h1>login </h1>')
-        .expect(200, done);
+        .expect(302)
+        .expect('Location', /\/login/,done);
     })
 
     // no username
@@ -50,8 +49,10 @@ describe('/registration tests', function(done) {
         "firstname": "first",
         "lastname": "last"
       })
+      .expect(response => {
+        assert(response.body[0].msg, 'username is required')
+      })
       .expect(422, done);
-
     })
 
     // no password
@@ -65,6 +66,9 @@ describe('/registration tests', function(done) {
         "email": "email@email.com",
         "firstname": "first",
         "lastname": "last"
+      })
+      .expect(response => {
+        assert(response.body[0].msg, 'password is required')
       })
       .expect(422, done);
     })
@@ -81,7 +85,11 @@ describe('/registration tests', function(done) {
         "firstname": "first",
         "lastname": "last"
       })
-      .expect(422,done)
+      .expect(422)
+      .expect(response => {
+        assert(response.body[0].msg, 'Passwords do not match')
+      })
+      .end(done)
     })
 
     // no email
@@ -96,7 +104,11 @@ describe('/registration tests', function(done) {
         "firstname": "first",
         "lastname": "last"
       })
-      .expect(422, done);
+      .expect(422)
+      .expect(response => {
+        assert(response.body[0].msg === 'Email required')
+      })
+      .end(done);
     })
 
     // bad email
@@ -113,7 +125,11 @@ describe('/registration tests', function(done) {
         "firstname": "",
         "lastname": "last"
       })
-      .expect(422, done);
+      .expect(422)
+      .expect(response => {
+        assert(response.body[0].msg === 'Firstname is required')
+      })
+      .end(done)
     })
 
     // no last name
@@ -128,11 +144,12 @@ describe('/registration tests', function(done) {
         "firstname": "first",
         "lastname": ""
       })
-      .expect(422, done);
+      .expect(422)
+      .expect(response => {
+        assert(response.body[0].msg === 'Lastname is required');
+      })
+      .end(done);
     })
-
-
-
   })
 });
 
