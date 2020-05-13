@@ -29,14 +29,14 @@ app.use(session({
 }));
 
 // PASSPORT CONFIG  
-require('./config/passport')(passport);
+require('./config/passport.config')(passport);
 
 //PASSPORT MIDDLEWARE
 app.use(passport.initialize());
 app.use(passport.session());
 
 //ROUTES
-app.use('/', require('./routes/index'));
+app.use('/', require('./routes/authentication.routes')); // user registration and signup
 
 //CONNECT TO MONGODB
 mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true, useUnifiedTopology: true},() => {
