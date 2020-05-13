@@ -6,7 +6,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
+const uuid = require('uuid');
 const session = require('express-session');
+var expressValidator = require('express-validator');
+
 
 require('dotenv/config');
 
@@ -20,10 +23,9 @@ app.set('view engine', 'pug');
 app.use(bodyParser.json());
 app.use(flash());
 app.use(session({
-    secret: 'secret thing',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true}
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true
 }));
 
 // PASSPORT CONFIG  
@@ -33,15 +35,16 @@ require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 //ROUTES
 app.use('/', require('./routes/index'));
 
 //CONNECT TO MONGODB
 mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true},() => {
     console.log('Connection success');
-})
+});
 
 //START SERVER
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`server started on port ${PORT}`));
+
+module.exports = app; // for testing
