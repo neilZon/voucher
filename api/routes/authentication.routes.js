@@ -6,7 +6,6 @@ const passport = require('passport');
 const validator = require('validator');
 const { check, validationResult } = require('express-validator');
 
-
 var router = express.Router();
 
 // user model
@@ -37,13 +36,13 @@ router.post('/register',[
     ], (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
-    const confirmPassword = req.body.confirmPassword;
     const email = req.body.email;
     const firstname = req.body.firstname;
     const lastname = req.body.lastname;
 
     let errors = validationResult(req);
     
+    // see if any errors were raised
     if(!errors.isEmpty()){
         return res.status(422).json(errors.array());
     } else {
@@ -66,8 +65,12 @@ router.post('/register',[
                 // save password to MongoDB
                 newUser.save((err) => {
                     if(err){
-                        console.log(err);
-                        res.send({error:err});
+                        // check for duplicate username or password
+                        if(err.name === 'MongoError' && err.code === 11000){
+                            let duplicatedField = (Object.keys(err.keyValue));
+                            res.send({msg:duplicatedField + " already exists" , keyValue:err.keyValue});
+                        }
+
                     } else {
                         req.flash('success', 'You are now registered');
                         res.redirect('/login');

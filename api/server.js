@@ -6,9 +6,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
-const uuid = require('uuid');
 const session = require('express-session');
-var expressValidator = require('express-validator');
 
 
 require('dotenv/config');
