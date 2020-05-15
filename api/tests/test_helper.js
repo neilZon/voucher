@@ -14,6 +14,13 @@ const test_user = {
 module.exports.test_user = test_user;
 
 // delete new user
-module.exports.removeOne = function(done){
+module.exports.removeDummyData = function(done){
     User.deleteMany({email:test_user.email}).then(done);
+}
+
+module.exports.addDummyData = function(newUser){
+    newUser = new User(newUser)
+    newUser.save(function(err){
+        if(err) return console.log(err);
+    })
 }

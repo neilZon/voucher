@@ -68,6 +68,7 @@ router.post('/register',[
                         // check for duplicate username or password
                         if(err.name === 'MongoError' && err.code === 11000){
                             let duplicatedField = (Object.keys(err.keyValue));
+                            res.status(409);
                             res.send({msg:duplicatedField + " already exists" , keyValue:err.keyValue});
                         }
 
