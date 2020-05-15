@@ -5,7 +5,7 @@
   align-items: center;
 }
 .padder{
-  padding-top: 70px;
+  padding-top: 60px;
   background: transparent;
 }
 .fontlol {
@@ -50,4 +50,15 @@
 .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
   background: #0356fc;
   height: 4px;
+}
+.fontlol {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.buttonstop {
+  padding-inline-start: 5px;
+}
+header{
+  position: sticky;
+  padding-top: 10px;
+  float: right;
 }
