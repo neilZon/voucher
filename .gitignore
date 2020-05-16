@@ -124,3 +124,7 @@ mongod
 *.ntvs*
 *.njsproj
 *.sln
+
+# Sensitive Config Files
+# =========
+*.env
