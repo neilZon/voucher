@@ -9,11 +9,13 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
+import { UserLoginComponent } from './header/userlogin/userlogin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,
