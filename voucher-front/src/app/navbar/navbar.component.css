@@ -24,9 +24,6 @@
   width: 100px;
 }
 
-/* .example-large-box {
-  w
-} */
 .loginsignup {
   position: absolute;
   z-index:30;
@@ -53,12 +50,4 @@
 }
 .fontlol {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-.buttonstop {
-  padding-inline-start: 5px;
-}
-header{
-  position: sticky;
-  padding-top: 10px;
-  float: right;
 }
