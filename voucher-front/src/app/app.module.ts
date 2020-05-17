@@ -10,6 +10,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserLoginComponent } from './header/userlogin/userlogin.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { UserLoginComponent } from './header/userlogin/userlogin.component';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    MatTabsModule
+    MatTabsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
