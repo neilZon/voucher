@@ -3,28 +3,46 @@
 const express = require('express'); 
 const path = require('path');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
 const session = require('express-session');
+const cors = require('cors');
 
+// ACCESS TO .env VARIABLES
+require('dotenv').config();
 
-require('dotenv/config');
+// INIT EXPRESS APP
+const app = express(); 
 
-const app = express(); // init express app
+//CONNECT TO MONGODB
+mongoose.connect(process.env.DB_CONNECTION, 
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    },
+    function(){
+    console.log('Connection success');
+});
 
 // LOAD VIEW ENGINE
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 //MIDDLEWARE
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({extended:true}))
 app.use(flash());
 app.use(session({
-    secret: 'keyboard cat', //TODO: change this to a random string 
+    secret: 'keyboard cat', //TODO: change this to a random string
     resave: true,
     saveUninitialized: true
 }));
+
+// ALLOW ANGULAR APP TO MAKE HTTP REQUESTS TO EXPRESS APP
+// app.use(cors());
+
+// WHERE ANGULAR BUILDS TO
+// app.use(express.static(path.join(__dirname, 'public')))
 
 // PASSPORT CONFIG  
 require('./config/passport.config')(passport);
@@ -33,13 +51,15 @@ require('./config/passport.config')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+// app.use((req, res, next) => {
+//     console.log(req.session);
+//     console.log(req.user);
+//     next();
+// })
+
 //ROUTES
 app.use('/', require('./routes/authentication.routes')); // user registration and signup
-
-//CONNECT TO MONGODB
-mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true, useUnifiedTopology: true},() => {
-    console.log('Connection success');
-});
+app.use('/', require('./routes/authorized.routes')); // user account and details
 
 //START SERVER
 const PORT = process.env.PORT || 4000;

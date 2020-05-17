@@ -1,10 +1,12 @@
-//=====================  index.js  ======================
+//=====================  authentication.routes.js  ======================
 
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const validator = require('validator');
 const { check, validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
+const utils = require('../utils/jwt.utils');
 
 var router = express.Router();
 
@@ -13,7 +15,6 @@ let User = require('../models/Users.models');
 
 //landing page
 router.get('/', (req, res) => {
-    // console.log(req.sessionID)
     res.send("voucher landing page");
 });
 
@@ -26,19 +27,15 @@ router.get('/register', (req, res) => {
 // registration request
 router.post('/register',[
         // check for and validate required inputs
-        check('username', 'Username is required').notEmpty(),
         check('email', 'Email required').notEmpty(),
         check('email', 'Invalid email').isEmail().custom((value, {req}) => validator.isEmail(req.body.email)),
         check('password', 'Password is required').notEmpty(),
         check('confirmPassword', 'Passwords do not match').notEmpty().custom((value, { req }) => value === req.body.password),
         check('firstname', 'Firstname is required').notEmpty(),
-        check('lastname', 'Lastname is required').notEmpty()
     ], (req, res, next) => {
-    const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
     const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
 
     let errors = validationResult(req);
     
@@ -46,35 +43,39 @@ router.post('/register',[
     if(!errors.isEmpty()){
         return res.status(422).json(errors.array());
     } else {
-        let newUser = new User({
-            username:username,
-            password:password,
-            email:email,
-            firstname:firstname,
-            lastname:lastname
-        });
+        
         
         // hash password with salt
-        bcrypt.genSalt(15, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
+        bcrypt.genSalt(15, (err, salt) => { 
+            bcrypt.hash(password, salt, (err, hash) => {
                 if(err){
                     console.log(err);
                 }
-                newUser.password = hash;
+
+                let newUser = new User({
+                    email:email,
+                    hash:hash,
+                    firstname:firstname,
+                });
                 
                 // save password to MongoDB
                 newUser.save((err) => {
+
                     if(err){
                         // check for duplicate username or password
                         if(err.name === 'MongoError' && err.code === 11000){
                             let duplicatedField = (Object.keys(err.keyValue));
                             res.status(409);
                             res.send({msg:duplicatedField + " already exists" , keyValue:err.keyValue});
+                        } else {
+                            res.send(err);
                         }
 
+                    // successful save
                     } else {
-                        req.flash('success', 'You are now registered');
-                        res.redirect('/login');
+                        const jwt = utils.issueJWT(newUser);
+                        res.json({success:true, user:newUser, token:jwt.token, expiresIn: jwt.expires});
+                        
                     }
                 })
             });
@@ -88,16 +89,38 @@ router.get('/login', (req, res) => {
 });
 
 // authentication
-router.post('/login', (req, res, next) => {
-    passport.authenticate('local', { 
-        successRedirect:'/',
+router.post('/login', function(req, res, next){
+
+    // invoke passport strategy
+    // NOTE: {session:false} allows us to create session
+    passport.authenticate('local', 
+    {
+        //session:false, 
+        successRedirect: '/',
         failureRedirect:'/login',
         failureFlash: true
-    }, 
-    function(){
-        console.log('authentication successful');
-        res.send("authentication success");
-    })(req,res,next);
+    })(req, res, next), 
+    function(err, user, info){
+        
+        if(err) return next(err);
+
+        // no user
+        if(!user){
+            return res.status(400).json({
+                message:'Something went wrong',
+                user:user
+            });
+        }
+
+        // found user
+        // TODO: JWT Token thing
+        req.login(user, /*{session: false},*/ (err) => {
+            if(err){
+                res.send(err);
+            }
+        })
+
+    }
 });
 
 module.exports = router; 
