@@ -91,36 +91,39 @@ router.get('/login', (req, res) => {
 // authentication
 router.post('/login', function(req, res, next){
 
-    // invoke passport strategy
-    // NOTE: {session:false} allows us to create session
-    passport.authenticate('local', 
-    {
-        //session:false, 
-        successRedirect: '/',
-        failureRedirect:'/login',
-        failureFlash: true
-    })(req, res, next), 
-    function(err, user, info){
-        
-        if(err) return next(err);
+    User.findOne({email:req.body.email}, 
+        function(err, user){
 
-        // no user
-        if(!user){
-            return res.status(400).json({
-                message:'Something went wrong',
-                user:user
-            });
-        }
+            if(err){ 
+                return res.send(err)
+            } 
 
-        // found user
-        // TODO: JWT Token thing
-        req.login(user, /*{session: false},*/ (err) => {
-            if(err){
-                res.send(err);
+            // email doesn't exist
+            if(!user){
+                res.status(401).json({success:false, msg:"no user with that email"})
             }
-        })
 
-    }
+            // compare hashed passwords
+            bcrypt.compare(req.body.password, user.hash, (err, isMatch) => {
+                if(err) throw err;
+                
+                // good login
+                if(isMatch){
+                    const tokenObj = utils.issueJWT(user);
+                    return res.status(200)
+                        .json({
+                            success:true, 
+                            token:tokenObj.token, 
+                            expiresIn:tokenObj.expires
+                        });
+                } 
+                
+                // bad login
+                else {
+                    return res.status(401).json({success:false, msg:'wrong password'});
+                }
+            }); 
+        });
 });
 
 module.exports = router; 
