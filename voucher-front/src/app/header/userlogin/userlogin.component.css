@@ -1,8 +1,18 @@
 .fontlol {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-.buttonstop {
-  padding-inline-start: 5px;
+.content {
+  display: flex;
+  justify-content: space-between;
+  max-width: 170px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px 10px;
+}
+span {
+  width: 200px;
+  height: 200px;
 }
 .pos{
   position: sticky;
