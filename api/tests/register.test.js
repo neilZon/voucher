@@ -2,11 +2,11 @@
 
 const assert = require('assert');
 const request = require('supertest');
-const superagent = require('superagent');
 const app = require('../server');
 const helpers = require('./test_helper');
 const test_user = helpers.test_user;
 var chai = require('chai');
+const User = require('../models/Users.models')
 var chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
@@ -31,23 +31,24 @@ describe('/registration tests', function(done) {
     describe('valid post requests', function(done){
 
       // clear database of any writes made
-      afterEach(function(done){
-        helpers.removeDummyData();
-        done();
-      });
-  
-      // valid registration
-      it('should redirect to /login', function(done){
+      afterEach( function(done){
+        this.timeout(15000);
+        User.deleteMany({email:test_user.email})
+          .then(() => done())
+      })
+
+      //valid registration
+      it('should give success bool and msg', function(done){
         this.timeout(15000); //TODO: find out why this test takes so long
         request(app)
           .post('/register')
           .send(test_user)
           .expect(response => {
-            assert(response.body.success == true)
+            assert(response.body.success === true)
           })
           .expect(200, done);
-
       });
+    
     })
 
     // test suite of invalid post requests
@@ -58,9 +59,9 @@ describe('/registration tests', function(done) {
         describe('duplicate email', function(done){
           
           // duplicate email, same everything else
-          before(function(done){
-            helpers.addDummyData(helpers.test_data);
-            done();
+          beforeEach(function(done){
+            helpers.addDummyData(helpers.test_data)
+              .then(() => done());
           })
 
           // duplicate email
@@ -76,9 +77,9 @@ describe('/registration tests', function(done) {
           })
 
           // clear database of any writes made
-          after(function(done){
-            helpers.removeDummyData()
-            done();
+          afterEach(function(done){
+            User.deleteMany({email:test_user.email})
+              .then(() => done());
           })
           
         })

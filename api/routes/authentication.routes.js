@@ -92,15 +92,17 @@ router.get('/login', (req, res) => {
 router.post('/login', function(req, res, next){
 
     User.findOne({email:req.body.email}, 
+        
         function(err, user){
+            console.log(req.body.email)
 
             if(err){ 
                 return res.send(err)
             } 
-
+            
             // email doesn't exist
-            if(!user){
-                res.status(401).json({success:false, msg:"no user with that email"})
+            if(!user || user === null ){
+                return res.status(401).json({success:false, msg:"no user with that email"})
             }
 
             // compare hashed passwords
@@ -123,7 +125,7 @@ router.post('/login', function(req, res, next){
                     return res.status(401).json({success:false, msg:'wrong password'});
                 }
             }); 
-        });
+        }).catch(err => {console.log(err)});
 });
 
 module.exports = router; 

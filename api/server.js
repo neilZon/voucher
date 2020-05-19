@@ -51,12 +51,6 @@ require('./config/passport.config')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use((req, res, next) => {
-//     console.log(req.session);
-//     console.log(req.user);
-//     next();
-// })
-
 //ROUTES
 app.use('/', require('./routes/authentication.routes')); // user registration and signup
 app.use('/', require('./routes/authorized.routes')); // user account and details
