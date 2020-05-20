@@ -25,64 +25,66 @@ router.get('/register', (req, res) => {
 });
 
 // registration request
-router.post('/register',[
+router.post('/register',
+    [
         // check for and validate required inputs
         check('email', 'Email required').notEmpty(),
         check('email', 'Invalid email').isEmail().custom((value, {req}) => validator.isEmail(req.body.email)),
         check('password', 'Password is required').notEmpty().isLength({min:6}),
         check('confirmPassword', 'Passwords do not match').notEmpty().custom((value, { req }) => value === req.body.password),
         check('firstname', 'Firstname is required').notEmpty(),
-    ]
-    ,(req, res, next) => {
-    const password = req.body.password;
-    const email = req.body.email;
-    const firstname = req.body.firstname;
+    ],
+    (req, res, next) => {
+        const password = req.body.password;
+        const email = req.body.email;
+        const firstname = req.body.firstname;
 
-    let errors = validationResult(req);
-    
-    // see if any errors were raised
-    if(!errors.isEmpty()){
-        return res.status(422).json(errors.array());
-    } else {
+        let errors = validationResult(req);
         
-        
-        // hash password with salt
-        bcrypt.genSalt(15, (err, salt) => { 
-            bcrypt.hash(password, salt, (err, hash) => {
-                if(err){
-                    console.log(err);
-                }
-
-                let newUser = new User({
-                    email:email,
-                    hash:hash,
-                    firstname:firstname,
-                });
-                
-                // save password to MongoDB
-                newUser.save((err) => {
-
+        // see if any errors were raised
+        if(!errors.isEmpty()){
+            return res.status(422).json(errors.array());
+        } else {
+            
+            
+            // hash password with salt
+            bcrypt.genSalt(15, (err, salt) => { 
+                bcrypt.hash(password, salt, (err, hash) => {
                     if(err){
-                        // check for duplicate email
-                        if(err.name === 'MongoError' && err.code === 11000){
-                            let duplicatedField = (Object.keys(err.keyValue));
-                            res.status(409);
-                            res.send({msg:duplicatedField + " already exists" , keyValue:err.keyValue});
-                        } else {
-                            res.send(err);
-                        }
-
-                    // successful save
-                    } else {
-                        const jwt = utils.issueJWT(newUser);
-                        res.json({success:true, user:newUser, token:jwt.token, expiresIn: jwt.expires});
-                        
+                        console.log(err);
                     }
-                })
-            });
-        })
+
+                    let newUser = new User({
+                        email:email,
+                        hash:hash,
+                        firstname:firstname,
+                    });
+                    
+                    // save password to MongoDB
+                    newUser.save((err) => {
+
+                        if(err){
+                            // check for duplicate email
+                            if(err.name === 'MongoError' && err.code === 11000){
+                                let duplicatedField = (Object.keys(err.keyValue));
+                                res.status(409);
+                                res.send({msg:duplicatedField + " already exists" , keyValue:err.keyValue});
+                            } else {
+                                res.send(err);
+                            }
+
+                        // successful save
+                        } else {
+                            const jwt = utils.issueJWT(newUser);
+                            res.json({success:true, user:newUser, token:jwt.token, expiresIn: jwt.expires});
+                            
+                        }
+                    })
+                });
+            })
+        }
     }
-});
+);
 
 //----------------------- login page -----------------------------
 router.get('/login', (req, res) => {
@@ -90,12 +92,11 @@ router.get('/login', (req, res) => {
 });
 
 // authentication
-router.post('/login', function(req, res, next){
+router.post('/login', (req, res, next) => {
 
     User.findOne({email:req.body.email}, 
         
         function(err, user){
-            console.log(req.body.email)
 
             if(err){ 
                 return res.send(err)
@@ -126,7 +127,8 @@ router.post('/login', function(req, res, next){
                     return res.status(401).json({success:false, msg:'wrong password'});
                 }
             }); 
-        }).catch(err => {console.log(err)});
+        }
+    ).catch(err => {console.log(err)});
 });
 
 module.exports = router; 

@@ -22,7 +22,8 @@ router.get('/register', (req, res, next) => {
    res.send("welcome to the business registration page");
 });
 
-router.post('/register', [
+router.post('/register',
+   [
       // check for and validate required inputs
       check('businessName', 'Business name required').notEmpty(),
       check('address', 'Address name required').notEmpty(),
@@ -38,64 +39,63 @@ router.post('/register', [
       check('lastname', 'Email required').notEmpty()
    ],
    (req, res, next) => {
-   const businessName = req.body.businessName;
-   const address = req.body.address;
-   const phoneNumber = req.body.phoneNumber;
-   const email = req.body.email;
-   const password = req.body.password;
-   const affiliation = req.body.affiliation;
-   const firstname = req.body.firstname;
-   const lastname = req.body.lastname;
+      const businessName = req.body.businessName;
+      const address = req.body.address;
+      const phoneNumber = req.body.phoneNumber;
+      const email = req.body.email;
+      const password = req.body.password;
+      const affiliation = req.body.affiliation;
+      const firstname = req.body.firstname;
+      const lastname = req.body.lastname;
 
-   let errors = validationResult(req);
+      let errors = validationResult(req);
 
-   // see if any errors were raised
-   if(!errors.isEmpty()){
-      return res.status(422).json(errors.array());
+      // see if any errors were raised
+      if(!errors.isEmpty()){
+         return res.status(422).json(errors.array());
 
-   } else {
-      bcrypt.genSalt(15, (err, salt) => {
-         bcrypt.hash(password, salt, (err, hash) => {
-            if(err){
-               console.log(err);
-            }
-
-            let newBusinessUser = new BusinessUser({
-               businessName:businessName,
-               address:address,
-               phoneNumber:phoneNumber,
-               email:email,
-               affiliation:affiliation,
-               hash:hash,
-               firstname:firstname,
-               lastname:lastname
-            })
-
-            // save user
-            newBusinessUser.save((err) => {
+      } else {
+         bcrypt.genSalt(15, (err, salt) => {
+            bcrypt.hash(password, salt, (err, hash) => {
                if(err){
-                  
-                  // check for duplicated email
-                  if(err.name === 'MongoError' && err.code === 11000){
-                     let duplicatedField = (Object.keys(err.keyValue));
-                     res.status(409);
-                     res.send({msg:duplicatedField + " already exists", keyValue:err.keyValue});
-                  
-                  } else {
-                     res.send(err);
-                  }
-               } else {
-                  const jwt = utils.issueJWT(newBusinessUser);
-                  res.json({success:true, user:newBusinessUser, token:jwt.token, expiresIn:jwt.expires});
+                  console.log(err);
                }
+
+               let newBusinessUser = new BusinessUser({
+                  businessName:businessName,
+                  address:address,
+                  phoneNumber:phoneNumber,
+                  email:email,
+                  affiliation:affiliation,
+                  hash:hash,
+                  firstname:firstname,
+                  lastname:lastname
+               })
+
+               // save user
+               newBusinessUser.save((err) => {
+                  if(err){
+                     
+                     // check for duplicated email
+                     if(err.name === 'MongoError' && err.code === 11000){
+                        let duplicatedField = (Object.keys(err.keyValue));
+                        res.status(409);
+                        res.send({msg:duplicatedField + " already exists", keyValue:err.keyValue});
+                     
+                     } else {
+                        res.send(err);
+                     }
+                     
+                  } else {
+                     const jwt = utils.issueJWT(newBusinessUser);
+                     res.json({success:true, user:newBusinessUser, token:jwt.token, expiresIn:jwt.expires});
+                  }
+               })
             })
          })
-      })
+      }
    }
-
-
-
-});
+);
 
 //----------------- business login page ----------------------
 router.get('/login', (req, res, next) => {
@@ -103,7 +103,40 @@ router.get('/login', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-   
+   BusinessUser.findOne({email:req.body.email},
+      
+      function(err, businessUser){
+         if(err){ 
+            return res.send(err)
+         } 
+         
+         // email doesn't exist
+         if(!businessUser || businessUser === null ){
+            return res.status(401).json({success:false, msg:"no business user with that email"})
+         }
+
+         // compare hashed passwords
+         bcrypt.compare(req.body.password, businessUser.hash, (err, isMatch) => {
+            if(err) throw err;
+            
+            // good login
+            if(isMatch){
+               const tokenObj = utils.issueJWT(businessUser);
+               return res.status(200)
+                  .json({
+                     success:true, 
+                     token:tokenObj.token, 
+                     expiresIn:tokenObj.expires
+                  });
+            } 
+            
+            // bad login
+            else {
+               return res.status(401).json({success:false, msg:'wrong password'});
+            }
+        }); 
+
+      })
 });
 
 module.exports = router; 
