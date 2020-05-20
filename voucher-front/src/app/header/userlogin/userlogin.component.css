@@ -1,0 +1,16 @@
+.fontlol {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.content {
+  display: flex;
+  justify-content: space-between;
+  max-width: 170px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+}
+span {
+  width: 100px;
+  height: 100px;
+}
