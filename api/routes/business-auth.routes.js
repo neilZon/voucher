@@ -34,9 +34,9 @@ router.post('/register',
       check('password', 'Password required').notEmpty(),
       check('password', 'Password must be at least 6 characters').isLength({min:6}),
       check('confirmPassword', 'Passwords do not match').notEmpty().custom((value, {req}) => value === req.body.password),
-      check('affiliation', 'Email required').notEmpty(),
-      check('firstname', 'Email required').notEmpty(),
-      check('lastname', 'Email required').notEmpty()
+      check('affiliation', 'Affiliation required').notEmpty(),
+      check('firstname', 'Firstname required').notEmpty(),
+      check('lastname', 'Lastname required').notEmpty()
    ],
    (req, res, next) => {
       const businessName = req.body.businessName;
@@ -134,9 +134,9 @@ router.post('/login', (req, res, next) => {
             else {
                return res.status(401).json({success:false, msg:'wrong password'});
             }
-        }); 
-
-      })
+         }); 
+      }
+   )
 });
 
 module.exports = router; 

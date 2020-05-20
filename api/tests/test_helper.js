@@ -1,6 +1,7 @@
 //=====================  test_helper.js  ======================
 
 const User = require('../models/Users.models')
+const BusinessUser = require('../models/Business-Users.models')
 
 const loginFormTestData = {
     email: "john@email.com",
@@ -41,7 +42,7 @@ const businessDBTestData = {
 // make available to other files
 module.exports.loginFormTestData = loginFormTestData;
 module.exports.dbTestData = dbTestData;
-module.exports.businessDBTestData = businessFormTestData;
+module.exports.businessFormTestData = businessFormTestData;
 module.exports.businessDBTestData = businessDBTestData;
 
 // add dummy user 
@@ -55,4 +56,17 @@ module.exports.addDummyData = async function(userObj){
 // delete dummy user
 module.exports.removeDummyData = async function(){
     await User.deleteMany({email:dbTestData.email});
+}
+
+// add dummy business user
+module.exports.addDummyBusinessData = async function(userObj){
+    newUser = new User(userObj);
+    await newUser.save(function(err){
+        if(err) return console.log('err');
+    });
+} 
+
+// remove dummy business user
+module.exports.removeDummyBusinessData = async function(){
+    await BusinessUser.deleteMany({email:businessDBTestData.email});
 }

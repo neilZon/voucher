@@ -5,11 +5,8 @@ const request = require('supertest');
 const app = require('../server');
 const helpers = require('./test_helper');
 const loginFormTestData = helpers.loginFormTestData;
-var chai = require('chai');
 const User = require('../models/Users.models')
-var chaiHttp = require('chai-http');
 
-chai.use(chaiHttp);
 
 // registration route test suite
 describe('/registration tests', function(done) {
@@ -33,7 +30,7 @@ describe('/registration tests', function(done) {
       // clear database of any writes made
       afterEach( function(done){
         this.timeout(15000);
-        User.deleteMany({email:loginFormTestData.email})
+        helpers.removeDummyData({email:loginFormTestData.email})
           .then(() => done())
       })
 
@@ -43,8 +40,8 @@ describe('/registration tests', function(done) {
         request(app)
           .post('/register')
           .send(loginFormTestData)
-          .expect(response => {
-            assert(response.body.success === true)
+          .expect(request => {
+            assert(request.body.success === true)
           })
           .expect(200, done);
       });
@@ -70,15 +67,15 @@ describe('/registration tests', function(done) {
               request(app)
                 .post('/register')
                 .send(loginFormTestData)
-                .expect(response => {
-                  assert(response.body.msg === 'email already exists');
+                .expect(request => {
+                  assert(request.body.msg === 'email already exists');
                 })
                 .expect(409, done);
           })
 
           // clear database of any writes made
           afterEach(function(done){
-            User.deleteMany({email:loginFormTestData.email})
+            helpers.removeDummyData({email:loginFormTestData.email})
               .then(() => done());
           })    
         })
@@ -87,15 +84,30 @@ describe('/registration tests', function(done) {
       describe('invalid inputs', function(done){
 
         // no password
-        it('should return \'password is required\' and 422 status', function(done){
+        it('should return three error messages and 422 status', function(done){
           let invalidUser = {...loginFormTestData};
           invalidUser.password="";
+          invalidUser.confirmPassword="";
 
           request(app)
             .post('/register')
             .send(invalidUser)
-            .expect(response => {
-              assert(response.body[0].msg === 'Password is required')
+            .expect(request => {
+              assert((request.body.length === 3));
+            })
+            .expect(422, done);
+        })
+
+        // short password 
+        it('should return \'password is too short\' and 422 status', function(done){
+          let invalidUser = {...loginFormTestData};
+          invalidUser.password="pwpw1";
+
+          request(app)
+            .post('/register')
+            .send(invalidUser)
+            .expect(request => {
+              assert(request.body[0].msg === 'Password must be at least 6 characters')
             })
             .expect(422, done);
         })
@@ -109,8 +121,8 @@ describe('/registration tests', function(done) {
             .post('/register')
             .send(invalidUser)
             .expect(422)
-            .expect(response => {
-              assert(response.body[0].msg, 'Passwords do not match')
+            .expect(request => {
+              assert(request.body[0].msg, 'Passwords do not match')
             })
             .end(done);
         })
@@ -124,8 +136,8 @@ describe('/registration tests', function(done) {
             .post('/register')
             .send(invalidUser)
             .expect(422)
-            .expect(response => {
-              assert(response.body[0].msg === 'Email required')
+            .expect(request => {
+              assert(request.body[0].msg === 'Email required')
             })
             .end(done);
         })
@@ -139,8 +151,8 @@ describe('/registration tests', function(done) {
             .post('/register')
             .send(invalidUser)
             .expect(422)
-            .expect(response => {
-              assert(response.body[0].msg === 'Invalid email')
+            .expect(request => {
+              assert(request.body[0].msg === 'Invalid email')
             })
             .end(done);
         })
@@ -154,8 +166,8 @@ describe('/registration tests', function(done) {
             .post('/register')
             .send(invalidUser)
             .expect(422)
-            .expect(response => {
-              assert(response.body[0].msg === 'Firstname is required')
+            .expect(request => {
+              assert(request.body[0].msg === 'Firstname is required')
             })
             .end(done)
         })
