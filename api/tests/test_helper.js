@@ -2,22 +2,47 @@
 
 const User = require('../models/Users.models')
 
-const test_user = {
+const loginFormTestData = {
     email: "john@email.com",
     password: "testpassword123",
     confirmPassword: "testpassword123",
     firstname: "Johnny"
 }
 
-const test_data = {
+const dbTestData = {
     email: "john@email.com",
     hash: "testpassword123",
     firstname: "Johnny"
 }
 
+const businessFormTestData = {
+    businessName:"Test Business name",
+    address:"1234 Palo Alto Ave",
+    phoneNumber:"8341231231",
+    email:"business@email.com",
+    affiliation:"head manager",
+    password:"pahuidsfgi2134t43gdfr2344tregwf",
+    confirmPassword:"pahuidsfgi2134t43gdfr2344tregwf",
+    firstname:"Firstname",
+    lastname:"Lastname"
+}
+
+const businessDBTestData = {
+    businessName:"Test Business name",
+    address:"1234 Palo Alto Ave",
+    phoneNumber:"8341231231",
+    email:"business@email.com",
+    affiliation:"head manager",
+    hash:"pahuidsfgi2134t43gdfr2344tregwf",
+    firstname:"Firstname",
+    lastname:"lastname"
+}
+
 // make available to other files
-module.exports.test_user = test_user;
-module.exports.test_data = test_data;
+module.exports.loginFormTestData = loginFormTestData;
+module.exports.dbTestData = dbTestData;
+module.exports.businessDBTestData = businessFormTestData;
+module.exports.businessDBTestData = businessDBTestData;
 
 // add dummy user 
 module.exports.addDummyData = async function(userObj){
@@ -29,5 +54,5 @@ module.exports.addDummyData = async function(userObj){
 
 // delete dummy user
 module.exports.removeDummyData = async function(){
-    await User.deleteMany({email:test_data.email});
+    await User.deleteMany({email:dbTestData.email});
 }

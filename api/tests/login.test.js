@@ -4,7 +4,7 @@ const assert = require('assert');
 const request = require('supertest');
 const User = require('../models/Users.models');
 const helpers = require('./test_helper');
-const test_user = helpers.test_user;
+const loginFormTestData = helpers.loginFormTestData;
 const app = require('../server');
 
 
@@ -28,14 +28,14 @@ describe('/login tests', function() {
       // duplicate email, same everything else
       beforeEach(function(done){
         this.timeout(15000); 
-         helpers.addDummyData(helpers.test_data)
+         helpers.addDummyData(helpers.dbTestData)
           .then(() => done())
       })
 
       // clear database of any writes made
       afterEach(function(done){
         this.timeout(15000); 
-        User.deleteMany({email:test_user.email})
+        User.deleteMany({email:loginFormTestData.email})
          .then(() => done())
      })
 

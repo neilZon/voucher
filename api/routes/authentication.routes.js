@@ -29,10 +29,11 @@ router.post('/register',[
         // check for and validate required inputs
         check('email', 'Email required').notEmpty(),
         check('email', 'Invalid email').isEmail().custom((value, {req}) => validator.isEmail(req.body.email)),
-        check('password', 'Password is required').notEmpty(),
+        check('password', 'Password is required').notEmpty().isLength({min:6}),
         check('confirmPassword', 'Passwords do not match').notEmpty().custom((value, { req }) => value === req.body.password),
         check('firstname', 'Firstname is required').notEmpty(),
-    ], (req, res, next) => {
+    ]
+    ,(req, res, next) => {
     const password = req.body.password;
     const email = req.body.email;
     const firstname = req.body.firstname;
@@ -62,7 +63,7 @@ router.post('/register',[
                 newUser.save((err) => {
 
                     if(err){
-                        // check for duplicate username or password
+                        // check for duplicate email
                         if(err.name === 'MongoError' && err.code === 11000){
                             let duplicatedField = (Object.keys(err.keyValue));
                             res.status(409);

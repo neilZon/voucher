@@ -54,6 +54,7 @@ app.use(passport.session());
 //ROUTES
 app.use('/', require('./routes/authentication.routes')); // user registration and signup
 app.use('/', require('./routes/authorized.routes')); // user account and details
+app.use('/business', require('./routes/business.routes')); // business user routes 
 
 //START SERVER
 const PORT = process.env.PORT || 4000;

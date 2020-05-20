@@ -4,7 +4,7 @@ const assert = require('assert');
 const request = require('supertest');
 const app = require('../server');
 const helpers = require('./test_helper');
-const test_user = helpers.test_user;
+const loginFormTestData = helpers.loginFormTestData;
 var chai = require('chai');
 const User = require('../models/Users.models')
 var chaiHttp = require('chai-http');
@@ -33,7 +33,7 @@ describe('/registration tests', function(done) {
       // clear database of any writes made
       afterEach( function(done){
         this.timeout(15000);
-        User.deleteMany({email:test_user.email})
+        User.deleteMany({email:loginFormTestData.email})
           .then(() => done())
       })
 
@@ -42,7 +42,7 @@ describe('/registration tests', function(done) {
         this.timeout(15000); //TODO: find out why this test takes so long
         request(app)
           .post('/register')
-          .send(test_user)
+          .send(loginFormTestData)
           .expect(response => {
             assert(response.body.success === true)
           })
@@ -60,7 +60,7 @@ describe('/registration tests', function(done) {
           
           // duplicate email, same everything else
           beforeEach(function(done){
-            helpers.addDummyData(helpers.test_data)
+            helpers.addDummyData(helpers.dbTestData)
               .then(() => done());
           })
 
@@ -69,7 +69,7 @@ describe('/registration tests', function(done) {
             this.timeout(15000);
               request(app)
                 .post('/register')
-                .send(test_user)
+                .send(loginFormTestData)
                 .expect(response => {
                   assert(response.body.msg === 'email already exists');
                 })
@@ -78,10 +78,9 @@ describe('/registration tests', function(done) {
 
           // clear database of any writes made
           afterEach(function(done){
-            User.deleteMany({email:test_user.email})
+            User.deleteMany({email:loginFormTestData.email})
               .then(() => done());
-          })
-          
+          })    
         })
       })
 
@@ -89,7 +88,7 @@ describe('/registration tests', function(done) {
 
         // no password
         it('should return \'password is required\' and 422 status', function(done){
-          let invalidUser = {...test_user};
+          let invalidUser = {...loginFormTestData};
           invalidUser.password="";
 
           request(app)
@@ -103,7 +102,7 @@ describe('/registration tests', function(done) {
 
         // passwords don't match
         it('should return \'passwords do not match\' and 422 status', function(done){
-          let invalidUser = {...test_user};
+          let invalidUser = {...loginFormTestData};
           invalidUser.confirmPassword="non-matchingpassword";
 
           request(app)
@@ -118,7 +117,7 @@ describe('/registration tests', function(done) {
 
         // no email
         it('should return \'email is required\' and 422 status', function(done){
-          let invalidUser = {...test_user};
+          let invalidUser = {...loginFormTestData};
           invalidUser.email="";
 
           request(app)
@@ -133,7 +132,7 @@ describe('/registration tests', function(done) {
 
         // bad email
         it('should return \'Invalid email\' and 422 status', function(done){
-          let invalidUser = {...test_user};
+          let invalidUser = {...loginFormTestData};
           invalidUser.email="notanemail";
 
           request(app)
@@ -148,7 +147,7 @@ describe('/registration tests', function(done) {
 
         // no first name
         it('should return \'firstname is required\' and 422 status', function(done){
-          let invalidUser = {...test_user};
+          let invalidUser = {...loginFormTestData};
           invalidUser.firstname="";
 
           request(app)
@@ -160,7 +159,6 @@ describe('/registration tests', function(done) {
             })
             .end(done)
         })
-
       })
     })
   })
