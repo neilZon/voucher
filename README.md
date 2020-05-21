@@ -1,6 +1,6 @@
-# Voucher🎟
+# Voucher 🎟
 An app to support local businesses
 
 # The Team
-Neilzon
-Shanuk
+* Neilzon
+* Shanuk
