@@ -1,8 +1,6 @@
 //=====================  passport.js  ======================
 
-const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/Users.models');
-const bcrypt = require('bcryptjs');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const fs = require('fs');
@@ -10,11 +8,6 @@ const path = require('path');
 
 const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
 const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf8');
-
-const customFields = {
-    usernameField:'email',
-    passwordField:'password'
-}
 
 // At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
 const options = {
@@ -82,4 +75,5 @@ module.exports = function(passport){
             done(err, user);
         });
     });
+
 }

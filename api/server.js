@@ -42,7 +42,7 @@ app.use(session({
 // app.use(cors());
 
 // WHERE ANGULAR BUILDS TO
-// app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '../voucher-front/src')));
 
 // PASSPORT CONFIG  
 require('./config/passport.config')(passport);
@@ -52,9 +52,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //ROUTES
-app.use('/', require('./routes/authentication.routes')); // user registration and signup
+app.use('/', require('./routes/authentication.routes')); // user registration and signup 
 app.use('/', require('./routes/authorized.routes')); // user account and details
 app.use('/business', require('./routes/business-auth.routes')); // business user routes 
+//app.use('/business', require('./routes/business-authorization.routes'));
 
 //START SERVER
 const PORT = process.env.PORT || 4000;
