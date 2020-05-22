@@ -5,7 +5,9 @@ const passport = require('passport');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
-const utils = require('../utils/jwt.utils');
+
+const utils = require('../utils/utils');
+const ROLES  = require("../utils/roles");
 
 var router = express.Router();
 
@@ -69,7 +71,8 @@ router.post('/register',
                   affiliation:affiliation,
                   hash:hash,
                   firstname:firstname,
-                  lastname:lastname
+                  lastname:lastname,
+                  type:ROLES.Business
                })
 
                // save user

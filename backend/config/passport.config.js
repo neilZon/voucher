@@ -1,6 +1,5 @@
 //=====================  passport.js  ======================
 
-const User = require('../models/Users.models');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const fs = require('fs');
@@ -8,6 +7,9 @@ const path = require('path');
 
 const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
 const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf8');
+
+const User = require('../models/Users.models');
+const BusinessUser = require('../models/Business-Users.models');
 
 // At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
 const options = {
@@ -17,25 +19,31 @@ const options = {
   };
 
 module.exports = function(passport){
-    passport.use(new JwtStrategy(options, function(jwt_payload, done){
+    passport.use(new JwtStrategy(options,async function(jwt_payload, done){
 
-        // search for user
-        User.findOne({_id:jwt_payload.sub}, function(err, user){
-
-            // something hit the stanky leg
-            if(err){
-                return done(err, false);
+        try {
+            let user = null
+    
+            // query user based on role 
+            if(jwt_payload.type === "customer"){
+                user = await User.findOne({_id:jwt_payload.sub});
             }
-
-            // found user
-            if(user){
-                return done(null, user);
-
+    
+            if(jwt_payload.type === "business"){
+                user = await BusinessUser.findOne({_id:jwt_payload.sub});
+            }
+    
             // no user
-            } else {
+            if(!user){
                 return done(null, false);
             }
-        })
+    
+            // found user
+            return done(null, user);
+
+        } catch(err) {
+            return done(err, false);
+        }
     }))
 
     // module.exports = function(passport){

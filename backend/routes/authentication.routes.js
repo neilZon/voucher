@@ -6,7 +6,9 @@ const passport = require('passport');
 const validator = require('validator');
 const { check, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const utils = require('../utils/jwt.utils');
+
+const utils = require('../utils/utils');
+const ROLES = require('../utils/roles');
 
 var router = express.Router();
 
@@ -59,6 +61,7 @@ router.post('/register',
                         email:email,
                         hash:hash,
                         firstname:firstname,
+                        type:ROLES.Customer
                     });
                     
                     // save password to MongoDB

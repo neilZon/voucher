@@ -16,8 +16,13 @@ const UserSchema = mongoose.Schema({
     firstname: {
         type: String,
         required:true
+    },
+    type: {
+        type: String,
+        required: true,
+        default: "customer"
     }
-    //TODO: add credit card token property
+    //TODO: add credit card token property from Stripe
 });
 
 const User = module.exports = mongoose.model('User', UserSchema, 'users');
