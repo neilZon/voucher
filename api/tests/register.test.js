@@ -5,7 +5,6 @@ const request = require('supertest');
 const app = require('../server');
 const helpers = require('./test_helper');
 const loginFormTestData = helpers.loginFormTestData;
-const User = require('../models/Users.models')
 
 
 // registration route test suite
@@ -27,24 +26,24 @@ describe('/registration tests', function(done) {
     // test suite of valid post requests
     describe('valid post requests', function(done){
 
-      // clear database of any writes made
-      afterEach( function(done){
-        this.timeout(15000);
-        helpers.removeDummyData({email:loginFormTestData.email})
-          .then(() => done())
-      })
-
       //valid registration
       it('should give success bool and msg', function(done){
         this.timeout(15000); //TODO: find out why this test takes so long
         request(app)
           .post('/register')
           .send(loginFormTestData)
-          .expect(request => {
-            assert(request.body.success === true)
+          .expect(response => {
+            assert(response.body.success === true);
           })
           .expect(200, done);
       });
+
+      // clear database of any writes made
+      afterEach(function(done){
+        this.timeout(15000);
+        helpers.removeDummyData({email:loginFormTestData.email})
+          .then(() => done())
+      })
     
     })
 

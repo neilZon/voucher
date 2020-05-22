@@ -14,7 +14,7 @@ let BusinessUser = require('../models/Business-Users.models');
 
 //----------------- business landing page ----------------------
 router.get('/', (req, res, next) => {
-   res.send("welcome to business landing page");
+   res.send(res.sendFile(path.join(__dirname)));
 })
 
 //----------------- business registration page ----------------------
