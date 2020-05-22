@@ -41,8 +41,8 @@ app.use(session({
 // ALLOW ANGULAR APP TO MAKE HTTP REQUESTS TO EXPRESS APP
 // app.use(cors());
 
-// WHERE ANGULAR BUILDS TO
 app.use(express.static(path.join(__dirname, '../voucher-front/src')));
+// WHERE ANGULAR BUILDS TO
 
 // PASSPORT CONFIG  
 require('./config/passport.config')(passport);
