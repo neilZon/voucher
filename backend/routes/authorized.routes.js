@@ -2,6 +2,9 @@
 
 const express = require('express');
 const passport = require('passport');
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+
+const User = require("../models/Users.models");
 
 var router = express.Router();
 
@@ -10,14 +13,17 @@ var router = express.Router();
  * this route will show user information and
  * allow user to manage subscriptions
 */
-router.get('/account', 
-   passport.authenticate('jwt', {session:false}), 
+router.get('/account',
    (req, res, next) => {
-      
-      //TODO: should reveal customers data
-      res.send('you are viewing your account details')
+      passport.authenticate('jwt-customer', {session:false}, (err, user, info) => {
+         console.log("fjklds;fa");
+         next()
+      }), (req, res, next)=>{
+         console.log("jkl;fsdfsl;");
+         next()
+      }
    }
-)
+);
 
 
 module.exports = router; 

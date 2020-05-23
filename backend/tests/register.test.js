@@ -28,11 +28,12 @@ describe('/registration tests', function(done) {
 
       //valid registration
       it('should give success bool and msg', function(done){
-        this.timeout(15000); //TODO: find out why this test takes so long
+        this.timeout(15000); //TODO: find out why this test takes so long and fails sometimes but not all the time
         request(app)
           .post('/register')
           .send(loginFormTestData)
           .expect(response => {
+            // console.log(response.body);
             assert(response.body.success === true);
           })
           .expect(200, done);

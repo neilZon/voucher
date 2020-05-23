@@ -2,10 +2,8 @@
 
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const passport = require('passport');
 const validator = require('validator');
 const { check, validationResult } = require('express-validator');
-const jwt = require('jsonwebtoken');
 
 const utils = require('../utils/utils');
 const ROLES = require('../utils/roles');

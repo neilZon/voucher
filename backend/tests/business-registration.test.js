@@ -28,8 +28,9 @@ describe("/business-register test", function(done){
             request(app)
                .post(businessRegistrationURL)
                .send(helpers.businessFormTestData)
-               .expect(request => {
-                  assert(request.body.success === true)
+               .expect(response => {
+                  // console.log(response.body);
+                  assert(response.body.success === true);
                })
                .expect(200, done)
          })

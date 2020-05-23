@@ -18,33 +18,53 @@ const options = {
     algorithms: ['RS256']
   };
 
-module.exports = function(passport){
-    passport.use(new JwtStrategy(options,async function(jwt_payload, done){
+  module.exports = function(passport){
+    passport.use("jwt-customer",
+        new JwtStrategy(options, function(jwt_payload, done){
 
-        try {
-            let user = null
-    
-            // query user based on role 
-            if(jwt_payload.type === "customer"){
-                user = await User.findOne({_id:jwt_payload.sub});
-            }
-    
-            if(jwt_payload.type === "business"){
-                user = await BusinessUser.findOne({_id:jwt_payload.sub});
-            }
-    
-            // no user
-            if(!user){
-                return done(null, false);
-            }
-    
-            // found user
-            return done(null, user);
+            // search for user
+            User.findOne({_id:jwt_payload.sub}, function(err, user){
 
-        } catch(err) {
-            return done(err, false);
-        }
-    }))
+                // something hit the stanky leg
+                if(err){
+                    return done(err, false);
+                }
+
+                // found user
+                if(user){
+                    return done(null, user);
+
+                // no user
+                } else {
+                    return done(null, false);
+                }
+            })
+        })
+    )
+
+    passport.use("jwt-business",
+        new JwtStrategy(options, function(jwt_payload, done){
+
+            // search for user
+            BusinessUser.findOne({_id:jwt_payload.sub}, function(err, user){
+
+                // something hit the stanky leg
+                if(err){
+                    return done(err, false);
+                }
+
+                // found user
+                if(user){
+                    return done(null, user);
+
+                // no user
+                } else {
+                    return done(null, false);
+                }
+            })
+            
+        })
+    )
 
     // module.exports = function(passport){
     //     // local strategy 

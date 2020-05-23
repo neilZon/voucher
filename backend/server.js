@@ -52,7 +52,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //ROUTES
-// app.use('/', require('./routes/landing-page.routes'))
+app.use('/', require('./routes/landing-page.routes'))
 app.use('/', require('./routes/authentication.routes')); // user registration and signup 
 app.use('/', require('./routes/authorized.routes')); // user account and details
 app.use('/', require('./routes/business-landing-page.routes'))

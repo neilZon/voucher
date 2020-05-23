@@ -3,22 +3,25 @@
 const express = require('express');
 const passport = require('passport');
 
+const BusinessUser = require('../models/Business-Users.models')
+
 var router = express.Router();
 
-// ---------------------- business ser account ------------------------ 
+// ---------------------- business user account ------------------------ 
 /* 
  * this route will show user information and
  * allow business users to manage packages
 */
-router.get('/account', 
-   passport.authenticate('jwt', {session:false}), 
+router.get('/account',
+   passport.authenticate('jwt-business', {session:false}), 
    (req, res, next) => {
       
-      //TODO: need to only allow business users 
-      res.send('you are viewing your account details')
-   },
-   
-)
+      //TODO: should reveal business data
+      res.send('you are viewing your business account details')
+      next();
+   }
+);
+
 
 
 module.exports = router; 
