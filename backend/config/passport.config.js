@@ -18,6 +18,7 @@ const options = {
     algorithms: ['RS256']
   };
 
+  // handles all customer related route authorization
   module.exports = function(passport){
     passport.use("jwt-customer",
         new JwtStrategy(options, function(jwt_payload, done){
@@ -42,6 +43,7 @@ const options = {
         })
     )
 
+    // handles all business user route authorization
     passport.use("jwt-business",
         new JwtStrategy(options, function(jwt_payload, done){
 
