@@ -8,6 +8,10 @@ An app to support local businesses
 # Planning Documents
 https://drive.google.com/drive/folders/1pl936AMppFH5impBr_G3cHvczcvQl6ex?usp=sharing
 
+# Prerequisites
+* Node 12.X.X
+* Angular CLI 9.X.X
+
 # How To Run Locally
 1. `git clone` to some directory 
 2. open up terminal and cd into /backend
