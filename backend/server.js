@@ -39,7 +39,7 @@ app.use(session({
 }));
 
 // ALLOW ANGULAR APP TO MAKE HTTP REQUESTS TO EXPRESS APP
-// app.use(cors());
+app.use(cors());
 
 // WHERE ANGULAR BUILDS TO
 //app.use(express.static(path.join(__dirname, '../frontend/src')));

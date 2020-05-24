@@ -34,6 +34,7 @@ router.post('/register',
       check('email', 'Email required').notEmpty(),
       check('email', 'Not a valid email').custom((value, {req}) => validator.isEmail(req.body.email)),
       check('password', 'Password required').notEmpty(),
+      //TODO: check for password complexity of required numbers
       check('password', 'Password must be at least 6 characters').isLength({min:6}),
       check('confirmPassword', 'Passwords do not match').notEmpty().custom((value, {req}) => value === req.body.password),
       check('affiliation', 'Affiliation required').notEmpty(),
