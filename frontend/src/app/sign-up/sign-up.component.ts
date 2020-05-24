@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { UserService } from '../shared/user.service';
 
@@ -18,7 +19,7 @@ export class SignUpComponent implements OnInit {
   public successMsg: string;
 
   // methods
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {}
 
@@ -29,10 +30,18 @@ export class SignUpComponent implements OnInit {
       this.password,
       this.confirmPassword)
       .subscribe(
-          data => {
-            if(data.success){
+          res => {
+            if(res.success){
+
               this.successMsg = "Sign up Successful";
               this.errorMsg = '';
+
+              // store token
+              localStorage.setItem('token', res.token);
+              
+              // redirect
+              console.log(res.token)
+              this.router.navigate(['/']);
             }
           }, 
           error => {

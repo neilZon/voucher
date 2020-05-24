@@ -1,18 +1,18 @@
 <mat-toolbar color="accent" *ngIf="successMsg">{{ successMsg }}</mat-toolbar>
 <mat-toolbar color="warn" *ngIf="errorMsg">{{errorMsg}}</mat-toolbar>
 
-<form (ngSubmit)="onSubmit()" class="col s12">
-  <mat-form-field>
-    <div class="input-field col s12">
-      <input matInput [(ngModel)]=email [ngModelOptions]="{standalone: true}" id="email" type="email" class="validate">
-      <label for="email">Email</label>
-    </div>
-  </mat-form-field>
-  <mat-form-field>
-    <div class="input-field col s12">
-      <input matInput [(ngModel)]=password [ngModelOptions]="{standalone: true}" id="password" type="password" class="validate">
-      <label for="password">Password</label>
-    </div>
-  </mat-form-field>
-  <button mat-raised-button color="primary">Login</button>
-</form>
+<div class="container">
+  <form (ngSubmit)="onSubmit()" class="col s12">
+
+      <div class="input-field col s12">
+        <input matInput [(ngModel)]=email [ngModelOptions]="{standalone: true}" id="email" type="email" class="validate">
+        <label for="email">Email</label>
+      </div>
+      <div class="input-field col s12">
+        <input matInput [(ngModel)]=password [ngModelOptions]="{standalone: true}" id="password" type="password" class="validate">
+        <label for="password">Password</label>
+      </div>
+      <button mat-raised-button color="primary">Login</button>
+  </form> 
+
+</div>
