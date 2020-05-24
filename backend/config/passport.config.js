@@ -1,7 +1,5 @@
 //=====================  passport.js  ======================
 
-
-const User = require('../models/Users.models');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const fs = require('fs');
