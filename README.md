@@ -10,6 +10,7 @@ https://drive.google.com/drive/folders/1pl936AMppFH5impBr_G3cHvczcvQl6ex?usp=sha
 
 # Prerequisites
 * Node 12.X.X
+* NPM 6.X.X
 * Angular CLI 9.X.X
 
 # How To Run Locally
