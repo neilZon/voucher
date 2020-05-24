@@ -33,7 +33,6 @@ describe('/registration tests', function(done) {
           .post('/register')
           .send(loginFormTestData)
           .expect(response => {
-            // console.log(response.body);
             assert(response.body.success === true);
           })
           .expect(200, done);
