@@ -22,6 +22,9 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
+import { MyBenefitsComponent } from './my-benefits/my-benefits.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { BrowseComponent } from './browse/browse.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { AccountComponent } from './account/account.component';
     HamburgerComponent,
     HomeComponent,
     LoginComponent,
-    AccountComponent
+    AccountComponent,
+    MyBenefitsComponent,
+    LandingPageComponent,
+    BrowseComponent
   ],
   imports: [
     BrowserModule,

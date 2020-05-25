@@ -12,10 +12,12 @@ export class UserLoginComponent implements OnInit{
   constructor(){}
 
   ngOnInit(): void {
+
+    // check if JWT exists ie. user is logged in 
     if(localStorage.getItem('token') != null){
       this.isLoggedIn = true;
     } else {
-      this.isLoggedIn = false;
+      this.isLoggedIn = false; 
     }
   }
 }
