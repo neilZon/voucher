@@ -5,7 +5,6 @@ const path = require('path');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const passport = require('passport');
-const session = require('express-session');
 const cors = require('cors');
 
 // ACCESS TO .env VARIABLES
@@ -32,11 +31,6 @@ app.set('view engine', 'pug');
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(flash());
-app.use(session({
-    secret: 'keyboard cat', //TODO: change this to a random string
-    resave: true,
-    saveUninitialized: true
-}));
 
 // ALLOW ANGULAR APP TO MAKE HTTP REQUESTS TO EXPRESS APP
 app.use(cors());

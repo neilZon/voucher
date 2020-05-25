@@ -5,7 +5,6 @@
 <div class="container">
   <form (ngSubmit)="onSubmit()" class="col s12">
     <div class="input-field col s12">
-      <i class="material-icons prefix">account_circle</i>
       <input matInput [(ngModel)]=firstname [ngModelOptions]="{standalone: true}" id="icon_prefix" type="text" placeholder="First Name">
       <label for="icon_prefix"></label>
     </div>
@@ -22,6 +21,7 @@
       <label for="confirmPassword">Confirm Password</label>
     </div>
     <button mat-raised-button color="primary">Sign Up</button>
+    Already have an account? <a routerLink="/login"> Login</a>
   </form>
 </div>
 

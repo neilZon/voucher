@@ -14,17 +14,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
-import { UserLoginComponent } from './header/userlogin/userlogin.component';
+import { UserLoginComponent } from './headers/userlogin/userlogin.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { HamburgerComponent } from './header/hamburger/hamburger.component';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 import { MyBenefitsComponent } from './my-benefits/my-benefits.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
 import { BrowseComponent } from './browse/browse.component';
+import { BusinessAccountComponent } from './business-account/business-account.component';
+import { BusinessHomeComponent } from './business-home/business-home.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -32,13 +33,14 @@ import { BrowseComponent } from './browse/browse.component';
     NavbarComponent,
     UserLoginComponent,
     SignUpComponent,
-    HamburgerComponent,
     HomeComponent,
     LoginComponent,
     AccountComponent,
     MyBenefitsComponent,
-    LandingPageComponent,
-    BrowseComponent
+    BrowseComponent,
+    BusinessAccountComponent,
+    BusinessHomeComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,11 @@ import { BrowseComponent } from './browse/browse.component';
       {
         path: 'account',
         component: AccountComponent
+      },{
+        path: 'business',
+        component: BusinessHomeComponent
       }
+
     ])
   ],
   providers: [],

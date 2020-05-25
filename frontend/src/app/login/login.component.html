@@ -3,16 +3,33 @@
 
 <div class="container">
   <form (ngSubmit)="onSubmit()" class="col s12">
-
       <div class="input-field col s12">
-        <input matInput [(ngModel)]=email [ngModelOptions]="{standalone: true}" id="email" type="email" class="validate">
-        <label for="email">Email</label>
+        <input 
+          matInput 
+          [(ngModel)]=email 
+          [ngModelOptions]="{standalone: true}" 
+          id="email" 
+          type="email" 
+          class="validate">
+        <label for="email">
+          Email
+        </label>
       </div>
       <div class="input-field col s12">
-        <input matInput [(ngModel)]=password [ngModelOptions]="{standalone: true}" id="password" type="password" class="validate">
+        <input matInput 
+          [(ngModel)]=password 
+          [ngModelOptions]="{standalone: true}" 
+          id="password" 
+          type="password" 
+          class="validate">
         <label for="password">Password</label>
       </div>
-      <button mat-flat-button color="primary" class="fontlol">Login</button>
-  </form> 
+      <button 
+        mat-flat-button color="primary" 
+        class="fontlol">
+        Login
+      </button>
 
+      Don't have an account? <a routerLink="/register"> Register</a>
+  </form> 
 </div>
