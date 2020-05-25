@@ -16,7 +16,7 @@ https://drive.google.com/drive/folders/1pl936AMppFH5impBr_G3cHvczcvQl6ex?usp=sha
 # How To Run Locally
 1. `git clone` to some directory 
 2. open up terminal and cd into /backend
-3. Ask Neilzon for the .env file to place in /backend
+3. Ask Neilzon for the `.env` file to place in /backend
 4. run `npm i` to install dependencies
 5. run `node generateKeypair.js` to get public and private keys
 6. run `npm run dev`
