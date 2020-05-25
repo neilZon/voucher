@@ -17,8 +17,9 @@ https://drive.google.com/drive/folders/1pl936AMppFH5impBr_G3cHvczcvQl6ex?usp=sha
 1. `git clone` to some directory 
 2. open up terminal and cd into /backend
 3. run `npm i` to install dependencies
-4. run `npm run dev`
-5. open another terminal and cd into /frontend
-6. run `npm i`
-7. run `ng serve`
-8. open browser and go to http://localhost:4200 or whatever port Angular opens up on
+4. run `node generateKeypair.js` to get public and private keys
+5. run `npm run dev`
+6. open another terminal and cd into /frontend
+7. run `npm i`
+8. run `ng serve`
+9. open browser and go to http://localhost:4200 or whatever port Angular opens up on
