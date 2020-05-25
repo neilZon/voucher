@@ -2,11 +2,11 @@
 
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const passport = require('passport');
 const validator = require('validator');
 const { check, validationResult } = require('express-validator');
-const jwt = require('jsonwebtoken');
-const utils = require('../utils/jwt.utils');
+
+const utils = require('../utils/utils');
+const ROLES = require('../utils/roles');
 
 var router = express.Router();
 
@@ -29,7 +29,8 @@ router.post('/register',
     [
         // check for and validate required inputs
         check('email', 'Email required').notEmpty(),
-        check('email', 'Invalid email').isEmail().custom((value, {req}) => validator.isEmail(req.body.email)),
+        check('email', 'Invalid email').isEmail(),
+        //TODO: check for password complexity of required numbers
         check('password', 'Password must be at least 6 characters').isLength({min:6}),
         check('password', 'Password is required').notEmpty(),
         check('confirmPassword', 'Passwords do not match').notEmpty().custom((value, { req }) => value === req.body.password),
@@ -39,6 +40,8 @@ router.post('/register',
         const password = req.body.password;
         const email = req.body.email;
         const firstname = req.body.firstname;
+
+        console.log(req.body);
 
         let errors = validationResult(req);
         
@@ -59,6 +62,7 @@ router.post('/register',
                         email:email,
                         hash:hash,
                         firstname:firstname,
+                        type:ROLES.Customer
                     });
                     
                     // save password to MongoDB

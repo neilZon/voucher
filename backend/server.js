@@ -39,10 +39,10 @@ app.use(session({
 }));
 
 // ALLOW ANGULAR APP TO MAKE HTTP REQUESTS TO EXPRESS APP
-// app.use(cors());
+app.use(cors());
 
-app.use(express.static(path.join(__dirname, '../voucher-front/src')));
 // WHERE ANGULAR BUILDS TO
+//app.use(express.static(path.join(__dirname, '../frontend/src')));
 
 // PASSPORT CONFIG  
 require('./config/passport.config')(passport);
@@ -52,13 +52,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //ROUTES
+app.use('/', require('./routes/landing-page.routes'))
 app.use('/', require('./routes/authentication.routes')); // user registration and signup 
 app.use('/', require('./routes/authorized.routes')); // user account and details
-app.use('/business', require('./routes/business-auth.routes')); // business user routes 
-//app.use('/business', require('./routes/business-authorization.routes'));
+app.use('/', require('./routes/business-landing-page.routes'))
+app.use('/business', require('./routes/business-authentication.routes')); // business user routes 
+app.use('/business', require('./routes/business-authorized.routes'));
 
 //START SERVER
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`server started on port ${PORT}`));
 
 module.exports = app; // for testing

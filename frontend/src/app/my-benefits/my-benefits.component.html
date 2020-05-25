@@ -1,0 +1,9 @@
+<div *ngIf="isLoggedOn">
+    <body>viewing your card list of benefits</body>
+</div>
+<div *ngIf="!isLoggedOn">
+    <div>
+        login to see your benefits!
+    </div>
+    <a routerLink="/login"><button mat-flat-button color="primary" class="fontlol">Login</button></a>
+</div>

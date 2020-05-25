@@ -1,6 +1,5 @@
 //=====================  passport.js  ======================
 
-const User = require('../models/Users.models');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const fs = require('fs');
@@ -9,6 +8,9 @@ const path = require('path');
 const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
 const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf8');
 
+const User = require('../models/Users.models');
+const BusinessUser = require('../models/Business-Users.models');
+
 // At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -16,27 +18,55 @@ const options = {
     algorithms: ['RS256']
   };
 
-module.exports = function(passport){
-    passport.use(new JwtStrategy(options, function(jwt_payload, done){
+  // handles all customer related route authorization
+  module.exports = function(passport){
+    passport.use("jwt-customer",
+        new JwtStrategy(options, function(jwt_payload, done){
 
-        // search for user
-        User.findOne({_id:jwt_payload.sub}, function(err, user){
+            // search for user
+            User.findOne({_id:jwt_payload.sub}, function(err, user){
 
-            // something hit the stanky leg
-            if(err){
-                return done(err, false);
-            }
+                // something hit the stanky leg
+                if(err){
+                    return done(err, false);
+                }
 
-            // found user
-            if(user){
-                return done(null, user);
+                // found user
+                if(user){
+                    return done(null, user);
 
-            // no user
-            } else {
-                return done(null, false);
-            }
+                // no user
+                } else {
+                    return done(null, false);
+                }
+            })
         })
-    }))
+    )
+
+    // handles all business user route authorization
+    passport.use("jwt-business",
+        new JwtStrategy(options, function(jwt_payload, done){
+
+            // search for user
+            BusinessUser.findOne({_id:jwt_payload.sub}, function(err, user){
+
+                // something hit the stanky leg
+                if(err){
+                    return done(err, false);
+                }
+
+                // found user
+                if(user){
+                    return done(null, user);
+
+                // no user
+                } else {
+                    return done(null, false);
+                }
+            })
+            
+        })
+    )
 
     // module.exports = function(passport){
     //     // local strategy 

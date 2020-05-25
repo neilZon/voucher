@@ -78,7 +78,8 @@ describe("/account tests", function(done){
                 request(app)
                     .get('/account')
                     .set("Authorization", token)
-                    .expect(200,done);
+                    .expect(200);
+                done();
             })
 
             // clear database of any writes made
@@ -94,16 +95,73 @@ describe("/account tests", function(done){
 
     //=====================  invalid tests ======================
     describe("invalid access", function(done){
-
-        it("should give 401 unauthorized status", function(done){
-            this.timeout(15000);
-
-            request(app)
-                .get('/account')
-                .expect(401);
+        describe("no token", function(donee){
+            
+            it("should give 401 unauthorized status", function(done){
+                this.timeout(15000);
+    
+                request(app)
+                    .get('/account')
+                    .expect(401);
                 done();
+            })
         })
 
+        describe("non token", function(done){
+            it("should give 401 unauthorized status", function(done){
+                this.timeout(15000);
+    
+                request(app)
+                    .get('/account')
+                    .set("Authorization", "Bearer yathisisnotatokenlikeatall")
+                    .expect(401);
+                    done();
+            })
+        })
+        
+        describe("business user jwt", function(done){
+            let token;
+
+            // register and login user 
+            beforeEach(function(done){
+                this.timeout(15000);
+
+                request(app)
+                    .post('/business/register')
+                    .send(helpers.businessFormTestData)
+                    .then(() => {
+                        request(app)
+                        .post('/business/login')
+                        .send(helpers.businessFormTestData)
+                        .end((err, response) => {
+                            token = response.body.token;
+                            done();
+                        })
+                    });                
+            })
+
+            it("should give 401 unauthorized status", function(done){
+
+                request(app)
+                    .get('/account')
+                    .set("Authorization", token)
+                    .expect(401);
+                done();
+            })
+
+            // clear database of any writes made
+            afterEach(function(done){
+                this.timeout(15000);
+                helpers.removeDummyBusinessData({email:helpers.loginFormTestData.email})
+                    .then(() => done())
+            })
+
+
+        })
+
+
     })
+
+
 
 })

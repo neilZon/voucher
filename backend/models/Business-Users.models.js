@@ -37,7 +37,13 @@ const BusinessUserSchema = mongoose.Schema({
    lastname: {
       type: String,
       required:true
+   },
+   type: {
+      type:String,
+      required:true,
+      default:"business"
    }
+   //TODO:add credit card token from Stripe
 });
 
 const BusinessUser = module.exports = mongoose.model('BusinessUser', BusinessUserSchema, 'business_users');

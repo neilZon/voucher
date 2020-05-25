@@ -1,4 +1,3 @@
-
 //===================== business-landing-page.routes.js ======================
 
 const express = require('express');
@@ -9,13 +8,13 @@ var router = express.Router();
 // ---------------------- user account ------------------------ 
 /* 
  * this route will show user information and
- * allow user to manage subscriptions
+ * allow business users to manage packages
 */
-router.get('/account', 
+router.get('/', 
    passport.authenticate('jwt', {session:false}), 
    (req, res, next) => {
       
-      //TODO: should reveal customers data
+      //TODO: need to only allow business users 
       res.send('you are viewing your account details')
    }
 )

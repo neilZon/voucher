@@ -126,6 +126,6 @@
   },
   "defaultProject": "voucher-front",
   "cli": {
-    "analytics": false
+    "analytics": "e4f3f265-d981-4ca8-9ce9-4b7aa906e759"
   }
 }

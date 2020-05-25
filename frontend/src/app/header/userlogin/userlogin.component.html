@@ -1,10 +1,17 @@
 <!-- <div class="pos"> -->
   <div class="content">
-    <span>
-      <a routerLink="/register"><button mat-flat-button color="primary" class="fontlol">Signup</button></a>
-    </span>
-    <span>
-      <a routerLink="/login"><button mat-flat-button color="primary" class="fontlol">Login</button></a>
-    </span>
+    <div *ngIf="isLoggedIn"> 
+      <span>
+        <a routerLink="/account"><button mat-flat-button color="primary" class="fontlol">Account</button></a>
+      </span>
+    </div>
+    <div *ngIf="!isLoggedIn">
+      <span>
+        <a routerLink="/register"><button mat-flat-button color="primary" class="fontlol">Signup</button></a>
+      </span>
+      <span>
+        <a routerLink="/login"><button mat-flat-button color="primary" class="fontlol">Login</button></a>
+      </span>
+    </div>
   </div>
 <!-- </div> -->
