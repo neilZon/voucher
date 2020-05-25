@@ -21,6 +21,7 @@ import { HamburgerComponent } from './header/hamburger/hamburger.component';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { LoginComponent } from './login/login.component';
     SignUpComponent,
     HamburgerComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +58,10 @@ import { LoginComponent } from './login/login.component';
       {
         path: 'login',
         component: LoginComponent
+      },
+      {
+        path: 'account',
+        component: AccountComponent
       }
     ])
   ],
