@@ -26,6 +26,7 @@ import { BrowseComponent } from './browse/browse.component';
 import { BusinessAccountComponent } from './business-account/business-account.component';
 import { BusinessHomeComponent } from './business-home/business-home.component';
 import { AboutComponent } from './about/about.component';
+import { HeadersComponent } from './headers/headers.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AboutComponent } from './about/about.component';
     BrowseComponent,
     BusinessAccountComponent,
     BusinessHomeComponent,
-    AboutComponent
+    AboutComponent,
+    HeadersComponent
   ],
   imports: [
     BrowserModule,

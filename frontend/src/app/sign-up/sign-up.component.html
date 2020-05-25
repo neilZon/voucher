@@ -1,6 +1,9 @@
 
+<app-headers></app-headers>
+
 <mat-toolbar color="accent" *ngIf="successMsg">{{ successMsg }}</mat-toolbar>
 <mat-toolbar color="warn" *ngIf="errorMsg">{{errorMsg}}</mat-toolbar>
+
 
 <div class="container">
   <form (ngSubmit)="onSubmit()" class="col s12">

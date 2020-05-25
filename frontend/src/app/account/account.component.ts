@@ -17,12 +17,8 @@ export class AccountComponent implements OnInit {
 
   }
 
-  /**
-   * logout user and redirect to homepage 
-   */
-  logoutUser():void {
-    localStorage.removeItem('token');
-    this.router.navigate(['/']);
-  }
+  //TODO: get user info on get request
+
+  
 
 }
