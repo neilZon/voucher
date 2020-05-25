@@ -1,16 +1,17 @@
-<header>
-    <a routerLink="/">
-      <img class="custom-logo" src="../../assets/img/untitled.svg"/>
-    </a>
-    <!-- show component based on route -->
-    <app-userlogin 
-      *ngIf="headerVariation === 'home-variant'">
-    </app-userlogin>
-    <button 
-      *ngIf="headerVariation ==='account-variant'"
-      mat-flat-button color="primary" 
-      (click)="logoutUser()"
-      class="content fontlol span">
-      Logout
-    </button>   
+<header style="background-color: #FAFAFA;">
+  <a routerLink="/">
+    <img class="custom-logo" src="../../assets/img/untitled.svg"/>
+  </a>
+  <!-- show component based on route -->
+  <app-userlogin 
+    *ngIf="headerVariation === 'home-variant'">
+  </app-userlogin>
+  
+  <button 
+    *ngIf="headerVariation ==='account-variant'"
+    mat-flat-button color="primary" 
+    (click)="logoutUser()"
+    class="content fontlol span">
+    Logout
+  </button>   
 </header>

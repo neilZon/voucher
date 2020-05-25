@@ -12,11 +12,12 @@ var router = express.Router();
  * allow user to manage subscriptions
 */
 router.get('/account', 
-   passport.authenticate('jwt', {session:false}), 
+   passport.authenticate('jwt-customer', {session:false}), 
    (req, res, next) => {
       
-      //TODO: should reveal customers data
-      res.send('you are viewing your account details')
+      // TODO: Also send credit card Stripe token
+      console.log(req.user);
+      res.json({firstname:req.user.firstname, email:req.user.email});
    }
 )
 

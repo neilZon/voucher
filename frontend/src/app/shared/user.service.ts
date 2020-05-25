@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -41,6 +41,19 @@ export class UserService implements IAuth {
     return this.http.post(`${this.BASE_URL}/register`, 
       {email, firstname, password, confirmPassword});
   }
+
+  /**
+   * send get request for user information 
+   */
+  getUser(): Observable<any>{
+    let headers = new HttpHeaders({Authorization: localStorage.getItem('token')});
+    return this.http.get(`${this.BASE_URL}/account`, {headers:headers});
+  }
+
+  /**
+   * TODO: implement this
+   */
+  getUserSubscriptions(){}
 
 
 }

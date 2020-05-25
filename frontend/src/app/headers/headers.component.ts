@@ -4,7 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 @Component({
   selector: 'app-headers',
   templateUrl: './headers.component.html',
-  styleUrls: ['./headers.component.css']
+  styleUrls: ['./headers.component.css', "./userlogin/userlogin.component.css"]
 })
 export class HeadersComponent implements OnInit {
 
@@ -31,7 +31,7 @@ export class HeadersComponent implements OnInit {
       // show nothing
     }
     else if(this.router.url.includes('/')){
-      this.headerVariation = "home-variant"
+      this.headerVariation = "home-variant";
     }
   }
 

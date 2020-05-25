@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../shared/models/Users/user.model';
 import { Router } from '@angular/router';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-account',
@@ -9,16 +10,24 @@ import { Router } from '@angular/router';
 })
 export class AccountComponent implements OnInit {
 
-  public User: User;
+  public userFirstname: string;
+  public userEmail: string;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
 
-  }
-
-  //TODO: get user info on get request
-
-  
+    // get users info
+    this.userService.getUser()
+      .subscribe(
+        res => {
+          this.userFirstname = res.firstname;
+          this.userEmail = res.email;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }  
 
 }

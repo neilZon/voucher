@@ -9,8 +9,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-
+import {MatDividerModule} from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatListModule} from '@angular/material/list';
+
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -49,8 +51,10 @@ import { HeadersComponent } from './headers/headers.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
+    MatListModule,
     MatButtonModule,
     MatTabsModule,
+    MatDividerModule,
     MatInputModule,
     MatFormFieldModule,
     NgbModule,
