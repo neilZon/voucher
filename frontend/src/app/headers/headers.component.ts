@@ -19,20 +19,23 @@ export class HeadersComponent implements OnInit {
   }
 
   handleRouteChange(){
-    
-    if (this.router.url.includes('/account') && localStorage.getItem('token') != null){
-      this.headerVariation = "account-variant"
+    if (this.router.url.match('/account') && localStorage.getItem('token') != null){
+      this.headerVariation = "account-variant";
 
     }
-    else if (this.router.url.includes('/login')){
-      // show nothing
+    else if (this.router.url.match('/login')){
+      this.headerVariation = "user-login-variant";
     }
-    else if (this.router.url.includes('/register')){
-      // show nothing
+    else if (this.router.url.match('/register')){
+      this.headerVariation = "user-register-variant";
     }
-    else if(this.router.url.includes('/')){
+    else if(this.router.url.match('/business')){
+      this.headerVariation = "business-home-variant"
+    }
+    else if(this.router.url.match('/')){
       this.headerVariation = "home-variant";
     }
+    
   }
 
   /**

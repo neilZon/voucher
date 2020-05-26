@@ -1,0 +1,31 @@
+<app-headers></app-headers>
+
+
+<div class="container">
+  <form class="col s12">
+      <div class="input-field col s12">
+        <input 
+          matInput 
+          id="email" 
+          type="email" 
+          class="validate">
+        <label for="email">
+          Email
+        </label>
+      </div>
+      <div class="input-field col s12">
+        <input matInput 
+          id="password" 
+          type="password" 
+          class="validate">
+        <label for="password">Password</label>
+      </div>
+      <button 
+        mat-flat-button color="primary" 
+        class="fontlol">
+        Login
+      </button>
+
+      Don't have an account? <a routerLink="/register"> Register</a>
+  </form> 
+</div>

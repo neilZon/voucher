@@ -15,6 +15,9 @@ export class AccountComponent implements OnInit {
 
   constructor(private router: Router, private userService: UserService) { }
 
+  /**
+   * set user information on initialization
+   */
   ngOnInit(): void {
 
     // get users info

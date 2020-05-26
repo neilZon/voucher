@@ -51,7 +51,7 @@ export class UserService implements IAuth {
   }
 
   /**
-   * TODO: implement this
+   * TODO: implement this for my benefits page
    */
   getUserSubscriptions(){}
 

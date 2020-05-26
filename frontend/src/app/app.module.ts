@@ -29,6 +29,8 @@ import { BusinessAccountComponent } from './business-account/business-account.co
 import { BusinessHomeComponent } from './business-home/business-home.component';
 import { AboutComponent } from './about/about.component';
 import { HeadersComponent } from './headers/headers.component';
+import { BusinessLoginComponent } from './business-login/business-login.component';
+import { BusinessSignUpComponent } from './business-sign-up/business-sign-up.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { HeadersComponent } from './headers/headers.component';
     BusinessAccountComponent,
     BusinessHomeComponent,
     AboutComponent,
-    HeadersComponent
+    HeadersComponent,
+    BusinessLoginComponent,
+    BusinessSignUpComponent
   ],
   imports: [
     BrowserModule,
