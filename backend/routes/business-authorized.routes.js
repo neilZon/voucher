@@ -17,6 +17,7 @@ router.get('/account',
    (req, res, next) => {
       
       //TODO: should reveal business data
+      // req.user
       res.send('you are viewing your business account details')
       next();
    }

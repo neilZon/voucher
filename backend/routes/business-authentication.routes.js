@@ -51,6 +51,8 @@ router.post('/register',
       const firstname = req.body.firstname;
       const lastname = req.body.lastname;
 
+      console.log(req.body)
+
       let errors = validationResult(req);
 
       // see if any errors were raised

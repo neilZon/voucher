@@ -58,7 +58,7 @@ router.post('/register',
          return res.status(422).json(errors.array());
 
       } else {
-         bcrypt.genSalt(15, (err, salt) => {
+         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(password, salt, (err, hash) => {
                if(err){
                   console.log(err);

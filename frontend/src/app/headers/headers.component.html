@@ -1,6 +1,9 @@
 <header style="background-color: #FAFAFA;">
-  <a routerLink="/">
+  <a *ngIf="logoVariation === 'regular-variant'" routerLink="/">
     <img class="custom-logo" src="../../assets/img/untitled.svg"/>
+  </a>
+  <a *ngIf="logoVariation === 'business-variant'" routerLink="/business">
+    <img class="custom-logo" src="../../assets/img/logo-business.svg"/>
   </a>
   <!-- show component based on route -->
   <app-userlogin 

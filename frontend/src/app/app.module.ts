@@ -80,11 +80,23 @@ import { BusinessSignUpComponent } from './business-sign-up/business-sign-up.com
       {
         path: 'account',
         component: AccountComponent
-      },{
+      },
+      {
         path: 'business',
         component: BusinessHomeComponent
+      },
+      {
+        path: 'business/login',
+        component: BusinessLoginComponent
+      },
+      {
+        path: 'business/register',
+        component: BusinessSignUpComponent
+      },
+      {
+        path: 'business/account',
+        component: BusinessAccountComponent
       }
-
     ])
   ],
   providers: [],

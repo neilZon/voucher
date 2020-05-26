@@ -3,7 +3,8 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { IAuth } from './auth';
+import { IAuth } from '../auth';
+import { User } from '../models/Users/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,9 +38,14 @@ export class UserService implements IAuth {
    * 
    * @returns observable 
    */
-  registerUser(email: string,firstname: string, password: string, confirmPassword: string): Observable<any>{
+  registerUser(user: User): Observable<any>{
     return this.http.post(`${this.BASE_URL}/register`, 
-      {email, firstname, password, confirmPassword});
+      {
+          email:user.email, 
+          firstname: user.firstname, 
+          password: user.password, 
+          confirmPassword: user.confirmPassword
+      });
   }
 
   /**

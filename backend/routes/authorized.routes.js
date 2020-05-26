@@ -16,7 +16,6 @@ router.get('/account',
    (req, res, next) => {
       
       // TODO: Also send credit card Stripe token
-      console.log(req.user);
       res.json({firstname:req.user.firstname, email:req.user.email});
    }
 )

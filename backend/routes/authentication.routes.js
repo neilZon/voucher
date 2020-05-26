@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 
 //----------------- register page ----------------------
 router.get('/register', (req, res) => {
-    res.render('registration');
+    res.send('<h1>Registration</h1>');
 });
 
 // registration request
@@ -41,10 +41,8 @@ router.post('/register',
         const email = req.body.email;
         const firstname = req.body.firstname;
 
-        console.log(req.body);
-
         let errors = validationResult(req);
-        
+
         // see if any errors were raised
         if(!errors.isEmpty()){
             return res.status(422).json(errors.array());
@@ -52,7 +50,7 @@ router.post('/register',
             
             
             // hash password with salt
-            bcrypt.genSalt(15, (err, salt) => { 
+            bcrypt.genSalt(10, (err, salt) => { 
                 bcrypt.hash(password, salt, (err, hash) => {
                     if(err){
                         console.log(err);

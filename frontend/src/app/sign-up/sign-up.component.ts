@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserService } from '../shared/user.service';
+import { UserService } from '../shared/services/user.service';
+import { User } from '../shared/models/Users/user.model';
 
 @Component({
   selector: 'app-sign-up',
@@ -24,11 +25,14 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(): void{
-    this.userService.registerUser(
-      this.email, 
+    const user: User = new User(
       this.firstname,
-      this.password,
-      this.confirmPassword)
+      this.password, 
+      this.confirmPassword,
+      this.email
+    );
+    
+    this.userService.registerUser(user)
       .subscribe(
           res => {
             if(res.success){
