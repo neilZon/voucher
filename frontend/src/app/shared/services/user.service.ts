@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+import * as jwtDecode from "jwt-decode";
+
 import { environment } from 'src/environments/environment';
 import { IAuth } from '../auth';
-import { User } from '../models/Users/user.model';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,7 @@ import { User } from '../models/Users/user.model';
 export class UserService implements IAuth {
 
   private BASE_URL = environment.API_URL;
+  private isAuthenticated: boolean = false; 
 
   constructor(private http: HttpClient) { 
 
@@ -59,7 +62,15 @@ export class UserService implements IAuth {
   /**
    * TODO: implement this for my benefits page
    */
-  getUserSubscriptions(){}
+  isRouteAuthenticated(): boolean{
+    const token = localStorage.getItem('token');
+    if (token != null){
+      if (jwtDecode(token).type === 'customer'){
+        return true;
+      }
+    }
+    return false;
+  }
 
 
 }

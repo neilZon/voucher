@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BusinessUserService } from '../shared/services/business-user.service';
-import { BusinessUser } from '../shared/models/BusinessUsers/business-user';
+import { BusinessUser } from '../shared/models/business-user';
 import { error } from 'protractor';
 
 @Component({

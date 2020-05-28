@@ -1,10 +1,13 @@
-<header style="background-color: #FAFAFA;">
-  <a *ngIf="logoVariation === 'regular-variant'" routerLink="/">
-    <img class="custom-logo" src="../../assets/img/untitled.svg"/>
-  </a>
-  <a *ngIf="logoVariation === 'business-variant'" routerLink="/business">
-    <img class="custom-logo" src="../../assets/img/logo-business.svg"/>
-  </a>
+<header>
+  <div>
+    <a *ngIf="logoVariation === 'regular-variant'" routerLink="/">
+      <img class="custom-logo" src="../../assets/img/untitled.svg"/>
+    </a>
+    <a *ngIf="logoVariation === 'business-variant'" routerLink="/business">
+      <img class="custom-logo" src="../../assets/img/logo-business.svg"/>
+    </a>
+
+  </div>
   <!-- show component based on route -->
   <app-userlogin 
     *ngIf="headerVariation === 'home-variant'">

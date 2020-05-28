@@ -4,22 +4,25 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatListModule} from '@angular/material/list';
-
-
+import { MatListModule} from '@angular/material/list';
+import { RouterModule } from '@angular/router';
+import { MatGridListModule } from '@angular/material/grid-list'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserLoginComponent } from './headers/userlogin/userlogin.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { RouterModule } from '@angular/router';
+import { UserAuthGuard } from './shared/user-auth.guard';
+import { BusinessUserAuthGuard } from './shared/business-user-auth.guard';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
@@ -53,6 +56,7 @@ import { BusinessSignUpComponent } from './business-sign-up/business-sign-up.com
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatGridListModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatListModule,
@@ -79,7 +83,8 @@ import { BusinessSignUpComponent } from './business-sign-up/business-sign-up.com
       },
       {
         path: 'account',
-        component: AccountComponent
+        component: AccountComponent,
+        canActivate:[UserAuthGuard]
       },
       {
         path: 'business',
@@ -95,7 +100,8 @@ import { BusinessSignUpComponent } from './business-sign-up/business-sign-up.com
       },
       {
         path: 'business/account',
-        component: BusinessAccountComponent
+        component: BusinessAccountComponent,
+        canActivate:[BusinessUserAuthGuard]
       }
     ])
   ],
