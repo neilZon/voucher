@@ -5,6 +5,16 @@
     margin-right: auto;
 }
 
-.img{
-    box-shadow: 0px 3px 3px rgba(68,68,68,0.6);
+.header{
+    background-color: royalblue;
+}
+
+:host{
+    position: fixed;
+    background-color: white;
+    padding: 0px 0px 5px;
+    display: block;
+    width: 100%;
+    height: fit-content;
+    box-shadow: 0px 1px 3px rgba(68,68,68,0.6);
 }

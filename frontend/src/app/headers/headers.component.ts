@@ -4,7 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 @Component({
   selector: 'app-headers',
   templateUrl: './headers.component.html',
-  styleUrls: ['./headers.component.css', "./userlogin/userlogin.component.css"]
+  styleUrls: ['./headers.component.css']
 })
 export class HeadersComponent implements OnInit {
 

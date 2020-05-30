@@ -1,35 +1,51 @@
 <div>
-
     <h1 class="about-title">Welcome to Voucher</h1>
-    <body class="about-body">Help support small businesses in Edmonton</body>
-    <mat-grid-list cols = "3" rowHeight = "100px">
+    <mat-grid-list cols = "3" rowHeight = "100px" [gutterSize]="'10px'">
         <mat-grid-tile 
             [colspan] = "2"
-            [rowspan] = "2">1
+            [rowspan] = "3">
+            We want to support local business...
         </mat-grid-tile>
 
         <mat-grid-tile
             [colspan] = "1"
-            [rowspan] = "2"
-            >2
+            [rowspan] = "3">
+            A picture of something that goes with the description
         </mat-grid-tile>
 
-        <mat-grid-tile>3
+        <mat-grid-tile
+        [rowspan] = "3">
+            benefit #1
         </mat-grid-tile>
 
-        <mat-grid-tile>4
+        
+        <mat-grid-tile
+        [rowspan] = "3">
+        
+            benefit #2
         </mat-grid-tile>
 
-        <mat-grid-tile>5
+        <mat-grid-tile
+        [rowspan] = "3">
+            benefit #3
         </mat-grid-tile>
 
-        <mat-grid-tile>7
+        <mat-grid-tile
+            [colspan] = "3"
+            [rowspan] = "1">
+            Who are we?
         </mat-grid-tile>
 
-        <mat-grid-tile>8
+        <mat-grid-tile>
+            member #1
         </mat-grid-tile>
 
-        <mat-grid-tile>9
+        <mat-grid-tile>
+            member #2
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            member #3
         </mat-grid-tile>
 
         <mat-grid-tile
@@ -38,5 +54,4 @@
         </mat-grid-tile>
 
     </mat-grid-list>
-
 </div>

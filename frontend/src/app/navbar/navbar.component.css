@@ -3,12 +3,21 @@
   height: 100%;
   display: flex;
   align-items: center;
-  padding-top: 8px;
-  background-color: rgb(247, 247, 247);
+  position: fixed;
+  top: 105px; 
+}
+
+:host{
+  position: relative;
 }
 
 .mat-tab-label-container{
   background-color: white;
+}
+
+.mat-tab-body-wrapper {
+  padding-top: 15px;
+  width: 100%;
 }
 
 .padder{
@@ -19,6 +28,7 @@
 .fontlol {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
 .example-small-box, .example-large-box {
   display: flex;
   align-items: center;
@@ -28,12 +38,13 @@
 }
 
 .mat-tab-header{
-  box-shadow: 0px 3px 10px rgba(68,68,68,0.6);
+  box-shadow: 0px 2px 5px rgba(68,68,68,0.6);
 }
 
 .example-small-box {
   height: 100px;
-  width: 100px;
+  width: 100%;
+
 }
 
 .loginsignup {
@@ -62,7 +73,6 @@
 .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
   background: rgb(255, 197, 71);
   height: 4px;
-
 }
 
 .fontlol {
