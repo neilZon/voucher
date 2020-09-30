@@ -1,5 +1,6 @@
+# Development halted due to nonviability in the market
 # Voucher 🎟
-An app to support local businesses
+An app to support local businesses 
 
 # The Team
 * Neilzon
